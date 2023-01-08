@@ -31,7 +31,10 @@ Citizen.CreateThread(function()
     end)
 end)
 
-bossinfo = nil
+RegisterNetEvent('ef-launder:client:notify')
+AddEventHandler('ef-launder:client:notify', function(msg, type)
+    QBCore.Functions.Notify(msg,type)
+end)
 
 function SetupLaunderBoss()
 	BossHash = Config.BossPed[math.random(#Config.BossPed)]
@@ -60,6 +63,7 @@ function DeleteBoss()
 		SetPedAsNoLongerNeeded(Boss)
 		Wait(8000)
 		DeletePed(Boss)
+        SetupLaunderBoss()
 	end
 end
 
@@ -107,11 +111,12 @@ RegisterNetEvent('ef-launder:client:launder', function()
         end)
         Wait(5200)
         TriggerServerEvent("ef-launder:server:laundersucces")
+        TriggerEvent('ef-launder:client:notify', "Here take the cash and watch out for the cops.", 'success')
         if math.random(1,100) <= Config.CallCopsChance then
             policeAlert()
         end
-    else
-        TriggerClientEvent('QBCore:Notify', source, ("You don't have any money that needs cleaning."), 'error')
+    else 
+        TriggerEvent('ef-launder:client:notify', "You don't have any money to launder", 'error')
     end
 end)
 
