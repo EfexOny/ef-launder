@@ -110,11 +110,12 @@ RegisterNetEvent('ef-launder:client:launder', function()
 		}, {}, {}, function() 
         end)
         Wait(5200)
-        TriggerServerEvent("ef-launder:server:laundersucces")
+        TriggerServerEvent("ef-launder:server:laundersucces",'markedbills')
         TriggerEvent('ef-launder:client:notify', "Here take the cash and watch out for the cops.", 'success')
-        if math.random(1,100) <= Config.CallCopsChance then
-            policeAlert()
-        end
+        -- ps.dispatch alert
+        -- if math.random(1,100) <= Config.CallCopsChance then
+        --     policeAlert()
+        -- end
     else 
         TriggerEvent('ef-launder:client:notify', "You don't have any money to launder", 'error')
     end
